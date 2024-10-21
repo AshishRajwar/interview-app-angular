@@ -9,6 +9,8 @@ import { ApiMainService } from '../api-main.service';
 })
 export class HomePageComponent {
   transactions: transaction[] = [];
+  transaction!: transaction;
+  userId: number | undefined;
 
   constructor(private apiMainService: ApiMainService) {}
   
@@ -16,6 +18,14 @@ export class HomePageComponent {
     this.apiMainService.getTransaction().subscribe(transactions => {
       this.transactions=transactions;
     });
+  }
+
+  getTransactionByID(): void {
+    if (this.userId !== undefined) { 
+      this.apiMainService.getTransactionById(this.userId).subscribe(transaction => {
+        this.transaction=transaction;
+      });
+    }
   }
 
 }

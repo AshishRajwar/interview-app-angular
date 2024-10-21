@@ -1,7 +1,41 @@
 <p>home-page works!</p>
 
-<button (click)="getTransaction()">Get Transactions</button>
+<button>Add Transactions</button>
 
+<div>
+  <input
+    type="number"
+    [(ngModel)]="userId" 
+    placeholder="Enter user ID"
+  />
+  <button (click)="getTransactionByID()">Get Transactions By ID</button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Amount</th>
+        <th>Time</th>
+        <th>TransactionType</th>
+        <th>Status</th>
+        <th>Currency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ transaction.id }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.timestamp }}</td>
+        <td>{{ transaction.transactionType }}</td>
+        <td>{{ transaction.status }}</td>
+        <td>{{ transaction.currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<button (click)="getTransaction()">Get Transactions</button>
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
       <thead>
@@ -25,4 +59,4 @@
         </tr>
       </tbody>
     </table>
-  </div>
+</div>
