@@ -1,1 +1,28 @@
 <p>home-page works!</p>
+
+<button (click)="getTransaction()">Get Transactions</button>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Amount</th>
+          <th>Time</th>
+          <th>TransactionType</th>
+          <th>Status</th>
+          <th>Currency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions; let i = index">
+          <td>{{ transaction.id }}</td>
+          <td>{{ transaction.amount }}</td>
+          <td>{{ transaction.timestamp }}</td>
+          <td>{{ transaction.transactionType }}</td>
+          <td>{{ transaction.status }}</td>
+          <td>{{ transaction.currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
