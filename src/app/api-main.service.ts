@@ -20,4 +20,8 @@ export class ApiMainService {
     return this.http.get<transaction>(transactionByIdUrl)
   }
 
+  createTransaction(transaction: transaction): Observable<transaction> {
+    return this.http.post<transaction>(this.transactionUrl, transaction);
+  }
+
 }
