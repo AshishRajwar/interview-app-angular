@@ -8,7 +8,7 @@
     <input type="number" id="amount" [(ngModel)]="newTransaction.amount" name="amount" min="1" required #amount="ngModel" />
     <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" style="color: red;">
       <small *ngIf="amount.errors?.['required']">Amount is required.</small>
-      <small *ngIf="amount.errors?.['min']">Amount must be greater than zero.</small>
+      <small *ngIf="amount.errors?.['min']">Amount must be greater than 1.</small>
     </div>
 
     <label for="date">Date:</label>
@@ -74,6 +74,9 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div *ngIf="errorMessage!=null" style="color: red;">
+    {{errorMessage}}
   </div>
 </div>
 

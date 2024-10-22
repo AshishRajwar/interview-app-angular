@@ -13,30 +13,37 @@ export class HomePageComponent {
   transaction: transaction = { id: 0, amount: 0, timestamp: '', transactionType: '', status: '', currency: ''};
   userId: number | undefined;
   newTransaction: transaction = { id: 0, amount: 0, timestamp: '', transactionType: '', status: '', currency: ''};
-
+  errorMessage: string | null = null;
   constructor(private apiMainService: ApiMainService) {}
   
   getTransaction(): void {
     this.transactions = [];
-    this.apiMainService.getTransaction().subscribe(transactions => {
-      this.transactions=transactions;
-    });
+    this.apiMainService.getTransaction().subscribe(
+      transactions => {
+        this.transactions=transactions;
+      },
+      (error) => {
+        console.error('Error fetching the transaction:', error); 
+        this.errorMessage = error; // Capture error from service
+      }
+    );
   }
 
   getTransactionByID(): void {
+    this.errorMessage=null;
     this.transaction=this.transaction2;
     if (this.userId !== undefined) { 
-      this.apiMainService.getTransactionById(this.userId).subscribe(transaction => {
-        this.transaction=transaction;
-      });
+      this.apiMainService.getTransactionById(this.userId).subscribe(
+        (transaction) => {
+          this.transaction=transaction;
+        },
+        (error) => {
+          console.error('Error fetching the transaction:', error); 
+          this.errorMessage = error; // Capture error from service
+        }
+      );
     }
   }
-
-  // createTransaction(transaction: transaction): void {
-  //   this.apiMainService.createTransaction(transaction).subscribe(transaction => {
-  //     console.log(transaction);
-  //   });
-  // }
 
   onSubmit(): void {
     this.apiMainService.createTransaction(this.newTransaction).subscribe(
@@ -64,7 +71,6 @@ export class HomePageComponent {
     } else {
       return false;
     }
-    
   }
 
   parseDateTime(dateTimeString: String): Date | null {
