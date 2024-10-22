@@ -32,11 +32,11 @@ export class HomePageComponent {
     }
   }
 
-  createTransaction(transaction: transaction): void {
-    this.apiMainService.createTransaction(transaction).subscribe(transaction => {
-      console.log(transaction);
-    });
-  }
+  // createTransaction(transaction: transaction): void {
+  //   this.apiMainService.createTransaction(transaction).subscribe(transaction => {
+  //     console.log(transaction);
+  //   });
+  // }
 
   onSubmit(): void {
     this.apiMainService.createTransaction(this.newTransaction).subscribe(
@@ -50,4 +50,37 @@ export class HomePageComponent {
     );
   }
 
+  // Custom method to validate manually entered date-time
+  isDateTimeValid(): boolean {
+    const minDateTime = new Date('2023-01-01T00:00');
+    const maxDateTime = new Date('2024-12-31T23:59');
+    if (!this.newTransaction.timestamp) {
+      return false;
+    }
+    // const enteredDateTime = new Date(this.transaction.timestamp);
+    const parsedDateTime = this.parseDateTime(this.newTransaction.timestamp);
+    if (parsedDateTime) {
+      return parsedDateTime >= minDateTime && parsedDateTime <= maxDateTime;
+    } else {
+      return false;
+    }
+    
+  }
+
+  parseDateTime(dateTimeString: String): Date | null {
+    try {
+      console.log(dateTimeString);
+      // Split the date and time components from the datetime-local string
+      const [datePart, timePart] = dateTimeString.split('T');
+      const [year, month, day] = datePart.split('-').map(Number);
+      const [hours, minutes] = timePart.split(':').map(Number);
+  
+      // Create a new Date object from the parsed components
+      return new Date(year, month - 1, day, hours, minutes);
+    } catch (error) {
+      // Return null if parsing fails
+      console.error('Invalid date-time format', error);
+      return null;
+    }
+  }
 }
